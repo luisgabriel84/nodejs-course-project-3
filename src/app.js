@@ -13,6 +13,7 @@ const session = require('express-session');
 
 const Course = require('./models/courses'); 
 const User = require('./models/users');
+const Subscription = require('./models/subscriptions');
 
 
 
@@ -163,10 +164,10 @@ app.use((req, res, next)=>{
                 })
                
             }
-
             req.session.user = result._id
             req.session.name = result.name;
             req.session.rol = result.rol;
+            req.session.userid = result.id;
            
             res.redirect(301, '/view-courses');
             
@@ -181,10 +182,19 @@ app.use((req, res, next)=>{
 
 
     })
-    .get('/inscripcion/*',(req,res)=>{
-
-        let id = req.query.course_id;
-
+    .get('/enroll',(req,res)=>{
+        let subscription = new Subscription({
+            student_id:  req.session.userid,
+            course_id : req.query.course_id,
+        })
+        subscription.save((err, result)=>{
+            if(err){
+                return console.log("Error");
+            }
+          
+            console.log(result)
+        });
+    
     })
 
 
