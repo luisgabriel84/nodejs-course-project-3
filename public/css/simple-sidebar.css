@@ -3,8 +3,11 @@
  * Copyright 2013-2019 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-simple-sidebar/blob/master/LICENSE)
  */
+ @import url('https://fonts.googleapis.com/css?family=Quicksand|Roboto&display=swap');
 body {
   overflow-x: hidden;
+  font-family: 'Quicksand', sans-serif;
+
 }
 .bg-light-blue{
   background-color: #0485E0;
@@ -52,9 +55,14 @@ body {
   #page-content-wrapper {
     min-width: 0;
     width: 100%;
+    background-color: #e0e9f0;
   }
 
   #wrapper.toggled #sidebar-wrapper {
     margin-left: -15rem;
   }
+}
+h4{
+    color:#2b5b84;
+    font-weight: bold;
 }
