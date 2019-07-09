@@ -68,7 +68,7 @@ app.use((req, res, next)=>{
     .use(express.static(boweComponents))
     
     .get('/',(req, res)=>{
-        res.render('users/login')
+        res.render('./users/login')
     })
     
 
