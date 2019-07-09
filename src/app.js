@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
+const port = process.env.PORT || 3000;
 
 
 
@@ -253,8 +254,8 @@ app.use((req, res, next)=>{
 
 
 //start port    
-app.listen(3000, ()=>{
-    console.log('Escuchando en el puerto 3000')
+app.listen(port, ()=>{
+    console.log('Escuchando en el puerto:'+port);
 })
 
 
