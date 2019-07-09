@@ -29,7 +29,10 @@ const boweComponents = path.join(__dirname, '../bower_components');
 const app = express();
 hbs.registerPartials(partialDir);
 
-mongoose.connect('mongodb://localhost:27017/gestion_academica',{useNewUrlParser:true},(err,result)=>{
+var local= "mongodb://localhost:27017/gestion_academica";
+var prod="mongodb+srv://mongoadmin:nimda@cluster0-t5f5t.mongodb.net/gestion_academica?retryWrites=true&w=majority";
+
+mongoose.connect(prod,{useNewUrlParser:true},(err,result)=>{
     if(err){
         return console.log(err);
     }
