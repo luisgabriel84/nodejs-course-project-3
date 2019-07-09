@@ -25,6 +25,9 @@ const courseSchema = new Schema({
     available:{
         type:Boolean,
         default: true
+    },
+    description:{
+        type:String
     }
 })
 

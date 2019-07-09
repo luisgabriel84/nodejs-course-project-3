@@ -1,0 +1,33 @@
+{{>header}}
+
+<div class="d-flex flex-column align-items-left justify-content-center my-2 py-4">
+<div class="col-12">
+    <h4> Estudiantes Inscritos en la clase</h4>
+</div>
+
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>Nombre</th>
+        <th>Identificación</th>
+        <th>Email</th>
+        <th>Acciones</th>
+    </tr>
+{{#each estudiantes}}
+    <tr>
+        <td>{{name}}</td>
+        <td>{{id}}</td>
+        <td>{{email}}</td>
+        <td>
+            <a href="/drop?user_id={{id}}&course_id={{../course}}" class="btn btn-danger">
+                Dar de baja
+            </a>
+
+        </td>
+    </tr>
+{{/each}}
+
+</table>
+</div>
+{{>footer}}
+
+

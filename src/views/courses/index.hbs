@@ -17,7 +17,12 @@
 
 {{#each listado}}
 		<div class="row mx-0 course__list__item" data-toggle="collapse" data-target="#collapse-{{id}}" aria-expanded="true" aria-controls="collapse-{{id}}">
-			<div class="col-3 p-3">{{name}}</div>
+			<div class="col-3 p-3">
+				<a href="/inscritos/?course_id={{id}}">
+					{{name}}
+				</a>
+				
+				</div>
 			<div class="col-2 p-3">{{description}}</div>
 			<div class="col-2 p-3">{{price}}</div>
 			
@@ -30,9 +35,12 @@
 		
 			<div class="col-2 p-3">	
 				<a href="/enroll/?course_id={{id}}" class="btn btn-success">
-				Inscripción
+				Inscripción {{rol}}
 				</a>
 			</div>
+		
+		
+	
 		
 		</div>
 

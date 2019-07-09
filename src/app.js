@@ -25,9 +25,11 @@ const boweComponents = path.join(__dirname, '../bower_components');
 
 
 //Modules
-const courses = require('./controllers/courses');
+const coursesCtrl = require('./controllers/courses');
 const students = require('./controllers/students');
 const users = require('./controllers/users');
+
+
 
 //configurations
 const app = express();
@@ -105,8 +107,10 @@ app.use((req, res, next)=>{
             if(err){
                 return console.log(err);
             }
+         
             res.render('courses/index',{
-                listado: response
+                listado: response,
+                admin: req.session.rol
             })
         })
 
@@ -131,8 +135,7 @@ app.use((req, res, next)=>{
             if(err){
                 return console.log("Error");
             }
-            res.redirect(301, '/view-courses');
-            console.log(result)
+            res.redirect(301, '/login');
         });
         
         
@@ -177,16 +180,20 @@ app.use((req, res, next)=>{
         req.session.destroy(( err)=> {
            console.log("No se pudo eliminar la session");
         })
-        console.log("session destroyed")
+     //   console.log("session destroyed")
         res.redirect('/login');
 
 
     })
     .get('/enroll',(req,res)=>{
+
+
         let subscription = new Subscription({
             student_id:  req.session.userid,
             course_id : req.query.course_id,
         })
+
+
         subscription.save((err, result)=>{
             if(err){
                 return console.log("Error");
@@ -195,6 +202,40 @@ app.use((req, res, next)=>{
             console.log(result)
         });
     
+    })
+    .get('/inscritos',(req,res)=>{
+      
+        
+        Subscription.find({course_id: req.query.course_id}).exec( (err,response, course_id=req.query.course_id )=>{
+
+            if(err){
+                return console.log(err);
+            }
+            let students =[];
+            let i;
+            for(i =0; i< response.length; i++){
+                students.push(response[i].student_id);
+            }
+            
+            User.find({
+                'id':{ $in:students}
+            },
+                (err,enrolled, courseID = course_id) => {  
+                    
+                res.render('courses/subscribed.hbs', {
+                    estudiantes: enrolled,
+                    course: courseID
+                })
+            })
+        }); 
+        
+    })
+
+    .get('/drop',(req, res)=>{
+        console.log(req.query.user_id, req.query.course_id);
+        Subscription.deleteOne( {course_id:req.query.course_id, student_id:req.query.user_id} , (err, response)=>{
+            res.redirect(301, '/view-courses');
+        })
     })
 
 
