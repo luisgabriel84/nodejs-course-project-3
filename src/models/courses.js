@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const uniqueValidator = require('mongoose-unique-validator');
 
 const Schema = mongoose.Schema;
 const courseSchema = new Schema({
@@ -8,7 +9,8 @@ const courseSchema = new Schema({
     },
     id:{
         type: Number,
-        require:true
+        require:true,
+        unique: true
     },
     price:{
         type:Number,
@@ -31,6 +33,6 @@ const courseSchema = new Schema({
     }
 })
 
-
+courseSchema.plugin(uniqueValidator);
 const Course = mongoose.model('Course', courseSchema);
 module.exports = Course;

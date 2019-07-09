@@ -1,5 +1,13 @@
 {{>header}}
+
 <div class="d-flex flex-column align-items-center justify-content-center my-5 py-4">
+	{{#if succesMessage}}
+			<div class="alert alert-success" role="alert">
+  				{{message}}
+			</div>
+	{{/if}}
+
+
 	<div class="row">
 		<h4>Ingreso de Usuarios</h4>
 	</div>

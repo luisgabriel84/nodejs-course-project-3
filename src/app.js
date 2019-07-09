@@ -24,13 +24,6 @@ const boweComponents = path.join(__dirname, '../bower_components');
 
 
 
-//Modules
-const coursesCtrl = require('./controllers/courses');
-const students = require('./controllers/students');
-const users = require('./controllers/users');
-
-
-
 //configurations
 const app = express();
 hbs.registerPartials(partialDir);
@@ -39,7 +32,6 @@ mongoose.connect('mongodb://localhost:27017/gestion_academica',{useNewUrlParser:
     if(err){
         return console.log(err);
     }
-    //console.log('Conectado');
 });
 
 //Helpers
@@ -57,9 +49,9 @@ app.use((req, res, next)=>{
     if(req.session.user){
         res.locals.session=true;
         res.locals.nombre = req.session.name
-        res.locals.admin =false;
+        res.locals.admin =false; //interesado
         if(req.session.rol===1){
-            res.locals.admin =true;
+            res.locals.admin =true; //coordinador
         }
     }
     next();
@@ -101,6 +93,7 @@ app.use((req, res, next)=>{
             res.redirect(301, '/view-courses');
         });
     })
+
     // List all courses
     .get('/view-courses',(req, res)=>{
         Course.find({}).exec((err,response)=>{
@@ -115,10 +108,24 @@ app.use((req, res, next)=>{
         })
 
     })
+
+
+    .get('/availabe-courses',(req, res)=>{
+        Course.find({available:true}).exec((err,response)=>{
+            if(err){
+                return console.log(err);
+            }
+            res.render('courses/availabe-courses',{
+                listado: response
+            })
+        })
+    })
+
     // Register form
     .get('/register',(req, res)=>{
         res.render('users/register')
     })
+
     // Process register data
     .post('/register',(req, res)=>{
         let user = new User({
@@ -133,9 +140,14 @@ app.use((req, res, next)=>{
        
         user.save((err, result)=>{
             if(err){
-                return console.log("Error");
+                console.log(err);   
             }
-            res.redirect(301, '/login');
+
+
+            res.render('users/login',{
+                succesMessage:true,
+                message:'Te has registrado exitosamente como aspirante, puedes ingresar y registrarte en los cursos'
+            })
         });
         
         
