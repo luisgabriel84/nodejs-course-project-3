@@ -39,6 +39,7 @@ mongoose.connect(prod,{useNewUrlParser:true},(err,result)=>{
     }
 });
 
+
 //Helpers
 require('./helpers')
 
@@ -66,8 +67,8 @@ app.use((req, res, next)=>{
 	app.use(bodyParser.urlencoded({extended:false}))
 	.use(express.static(publicDir))
     .set('view engine', 'hbs')
-    app.set('views', path.join(__dirname, 'views')
     .use(express.static(boweComponents))
+    .set('views', path.join(__dirname, 'views'))
     
     .get('/',(req, res)=>{
         res.render('users/login')
