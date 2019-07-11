@@ -33,7 +33,7 @@ hbs.registerPartials(partialDir);
 var local= "mongodb://localhost:27017/gestion_academica";
 var prod="mongodb+srv://mongoadmin:nimda@cluster0-t5f5t.mongodb.net/gestion_academica?retryWrites=true&w=majority";
 
-mongoose.connect(prod,{useNewUrlParser:true},(err,result)=>{
+mongoose.connect(local,{useNewUrlParser:true},(err,result)=>{
     if(err){
         return console.log(err);
     }
@@ -55,9 +55,9 @@ app.use((req, res, next)=>{
     if(req.session.user){
         res.locals.session=true;
         res.locals.nombre = req.session.name
-        res.locals.admin =false; //interesado
+        res.locals.adminSession =false; //interesado
         if(req.session.rol===1){
-            res.locals.admin =true; //coordinador
+            res.locals.adminSession =true; //coordinador
         }
     }
     next();
@@ -147,7 +147,12 @@ app.use((req, res, next)=>{
        
         user.save((err, result)=>{
             if(err){
-                console.log(err);   
+                console.log(err);
+                res.render('users/register',{
+                    errorMessage:true,
+                    message:err.message,
+                })
+
             }
 
 

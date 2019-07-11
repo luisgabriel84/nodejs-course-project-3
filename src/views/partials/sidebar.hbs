@@ -4,8 +4,11 @@
      
         <div class="list-group list-group-flush border-right">
              {{#if session }}
-                    <a href="/create-course" class="list-group-item list-group-item-action bg-light">Crear cursos</a>
-                     <a href="/view-courses" class="list-group-item list-group-item-action bg-light">Inscripción en cursos</a>
+                  
+                  {{#if adminSession}}
+                    <a href="/create-course" class="list-group-item list-group-item-action bg-light">Crear cursos </a>
+                   {{/if}}  
+                    <a href="/view-courses" class="list-group-item list-group-item-action bg-light">Inscripción en cursos</a>
             {{/if}}
             <a href="/availabe-courses" class="list-group-item list-group-item-action bg-light">Cursos ofertados</a>
         </div>

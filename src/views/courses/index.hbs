@@ -4,46 +4,46 @@
     <div class="col-12">
 <h4>Listado de cursos</h4>
 </div>
-<div class="row mx-0 table-bordered courses__list__header">
-	<div class="col-3 p-3 courses__list__header__cell">Nombre</div>
-	<div class="col-2 p-3 courses__list__header__cell">Descripción</div>
-	<div class="col-2 p-3 courses__list__header__cell">Valor</div>
-	<div class="col-1 p-3 courses__list__header__cell">Disponible</div>
-	<div class="col-2 p-3 courses__list__header__cell">Modalidad</div>
 
-		<div class="col-2 p-3 courses__list__header__cell">Inscripción</div>
 
-</div>
+<table class="table table-striped table-bordered table-hover">
+    <thead class="thead-dark">
+		<th>id</th>
+		<th>Nombre</th>
+		<th>Descripción</th>
+		<th>Valor</th>
+		<th>Disponibilidad</th>
+		<th>Modalidad</th>
+		<th>Intensidad</th>
+		{{#unless adminSession}}
+			<th>Inscripción</th>
+		{{/unless}}
+	</thead>
 
-{{#each listado}}
-		<div class="row mx-0 course__list__item" data-toggle="collapse" data-target="#collapse-{{id}}" aria-expanded="true" aria-controls="collapse-{{id}}">
-			<div class="col-3 p-3">
-				<a href="/inscritos/?course_id={{id}}">
+	 <tbody>
+		 {{#each listado}}
+		 <tr>
+			<td>{{id}}</td>
+			<td>				<a href="/inscritos/?course_id={{id}}">
 					{{name}}
-				</a>
-				
-				</div>
-			<div class="col-2 p-3">{{description}}</div>
-			<div class="col-2 p-3">{{price}}</div>
-			
-			<div class="col-1 p-3">
-				{{#if available}}Sí{{else}}No{{/if}}
-			</div>
-			<div class="col-2 p-3">
-				{{modality}}
-			</div>
-		
-			<div class="col-2 p-3">	
-				<a href="/enroll/?course_id={{id}}" class="btn btn-success">
-				Inscripción {{rol}}
-				</a>
-			</div>
-		
-		
-	
-		
-		</div>
+				</a></td>
+			<td>{{description}}</td>
+			<td>$ {{price}}</td>
+			<td>{{#if available}}Sí{{else}}No{{/if}}</td>
+			<td>{{modality}}</td>
+			<td>{{intensity}} horas</td>
+			{{#unless ../adminSession}}
+				<td>
+					<a href="/enroll/?course_id={{id}}" class="btn btn-success">
+					Inscripción {{rol}}
+					</a>
+				</td>
+			{{/unless}}
+		</tr>
+		{{/each}}
+	 </tbody>
 
-{{/each}}
+
+</table>
 </div>
 {{>footer}}
