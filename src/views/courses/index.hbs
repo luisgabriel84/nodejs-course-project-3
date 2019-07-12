@@ -15,9 +15,8 @@
 		<th>Disponibilidad</th>
 		<th>Modalidad</th>
 		<th>Intensidad</th>
-		{{#unless adminSession}}
-			<th>Inscripción</th>
-		{{/unless}}
+		<th>Acciones</th>
+
 	</thead>
 
 	 <tbody>
@@ -32,13 +31,37 @@
 			<td>{{#if available}}Sí{{else}}No{{/if}}</td>
 			<td>{{modality}}</td>
 			<td>{{intensity}} horas</td>
-			{{#unless ../adminSession}}
+		
 				<td>
-					<a href="/enroll/?course_id={{id}}" class="btn btn-success">
-					Inscribirme {{rol}}
-					</a>
+					{{#unless ../adminSession}}
+						<a href="/enroll/?course_id={{id}}" class="btn btn-success">
+						Inscribirme
+						</a>
+					{{/unless}}
+
+					{{#if ../adminSession}}
+						
+						<a href="/inscritos/?course_id={{id}}" class="btn btn-info">
+							Ver inscritos
+						</a>
+
+
+						{{#if available}}
+						<a href="/change-state/?course_id={{id}}&state=0" class="btn btn-warning">
+							Deshabilitar
+						</a>
+						{{else}}
+							<a href="/change-state/?course_id={{id}}&state=1" class="btn btn-success">
+								Habilitar
+							</a>
+						{{/if}}
+
+
+
+
+					{{/if}}
 				</td>
-			{{/unless}}
+
 		</tr>
 		{{/each}}
 	 </tbody>

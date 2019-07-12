@@ -94,7 +94,10 @@ app.use((req, res, next)=>{
 
         course.save((err, resultado)=>{
             if(err){
-                return console.log("Error");
+                return res.render('messages',{
+                    errorMessage:true,
+                    message: err.message
+                })
             }
             res.redirect(301, '/view-courses');
         });
@@ -239,9 +242,6 @@ app.use((req, res, next)=>{
                 succesMessage:true,
                 message: "Fuiste inscrito en el curso satisfatoriamente"
             })
-
-
-          
         });
     
     })
@@ -274,9 +274,29 @@ app.use((req, res, next)=>{
     })
 
     .get('/drop',(req, res)=>{
-        console.log(req.query.user_id, req.query.course_id);
         Subscription.deleteOne( {course_id:req.query.course_id, student_id:req.query.user_id} , (err, response)=>{
             res.redirect(301, '/view-courses');
+        })
+    })
+    .get('/change-state',(req,res)=>{
+        let state_value = false;
+        if(req.query.state==1){
+            state_value = true;
+        }
+        
+
+        Course.findOneAndUpdate({ id: req.query.course_id }, {$set: { available: state_value }},(err, result)=>{
+            if(err){
+                return res.render('messages',{
+                    errorMessage:true,
+                    message: err.message
+                })
+               
+            }
+            return res.render('messages',{
+                succesMessage:true,
+                message: "Se cambio el estado del curso satisfactoriamente"
+            })
         })
     })
 
