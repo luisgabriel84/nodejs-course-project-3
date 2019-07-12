@@ -7,7 +7,7 @@
 - npm install 
 - Ejecutar mongo db
 - Modificar la línea 15 en app.js con su información de base de datos
-- Modificar la línea 7 con la variable local
+- Modificar la línea 17 con la variable local
 
 ---
 ## Ingreso a la aplicación desplegada en Heroku
