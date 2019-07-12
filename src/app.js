@@ -11,7 +11,10 @@ const session = require('express-session');
 
 
 process.env.PORT = process.env.PORT || 3000;
-process.env.URLDB = "mongodb://localhost:27017/gestion_academica";
+var  prod ="mongodb+srv://mongoadmin:nimda@cluster0-t5f5t.mongodb.net/gestion_academica?retryWrites=true&w=majority";
+var local ="mongodb://localhost:27017/gestion_academica";
+
+process.env.URLDB = prod;
 
 const Course = require('./models/courses'); 
 const User = require('./models/users');
