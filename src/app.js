@@ -9,9 +9,9 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 
-const port = process.env.PORT || 3000;
 
-
+process.env.PORT = process.env.PORT || 3000;
+process.env.URLDB = "mongodb://localhost:27017/gestion_academica";
 
 const Course = require('./models/courses'); 
 const User = require('./models/users');
@@ -30,10 +30,9 @@ const boweComponents = path.join(__dirname, '../bower_components');
 const app = express();
 hbs.registerPartials(partialDir);
 
-var local= "mongodb://localhost:27017/gestion_academica";
-var prod="mongodb+srv://mongoadmin:nimda@cluster0-t5f5t.mongodb.net/gestion_academica?retryWrites=true&w=majority";
 
-mongoose.connect(prod,{useNewUrlParser:true},(err,result)=>{
+
+mongoose.connect(process.env.URLDB,{useNewUrlParser:true},(err,result)=>{
     if(err){
         return console.log(err);
     }
@@ -154,8 +153,6 @@ app.use((req, res, next)=>{
                 })
 
             }
-
-
             res.render('users/login',{
                 succesMessage:true,
                 message:'Te has registrado exitosamente como aspirante, puedes ingresar y registrarte en los cursos'
@@ -218,12 +215,33 @@ app.use((req, res, next)=>{
         })
 
 
+        Subscription.find(
+            {course_id: req.query.course_id, 
+             student_id: req.session.userid})
+            .exec( (err,response)=>{
+                if(response.length>0){
+                    return res.render('messages',{
+                        errorMessage:true,
+                        message: "Ya te encuentras inscrito en este curso"
+                    })
+                }
+        });
+
         subscription.save((err, result)=>{
             if(err){
-                return console.log("Error");
+                return res.render('messages',{
+                    errorMessage:true,
+                    message: err.message
+                })
+               
             }
+            return res.render('messages',{
+                succesMessage:true,
+                message: "Fuiste inscrito en el curso satisfatoriamente"
+            })
+
+
           
-            console.log(result)
         });
     
     })
@@ -265,8 +283,8 @@ app.use((req, res, next)=>{
 
 
 //start port    
-app.listen(port, ()=>{
-    console.log('Escuchando en el puerto:'+port);
+app.listen(process.env.PORT , ()=>{
+    console.log('Escuchando en el puerto:'+ process.env.PORT);
 })
 
 

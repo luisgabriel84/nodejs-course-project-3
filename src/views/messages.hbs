@@ -1,0 +1,15 @@
+{{>header}}
+<div class="d-flex flex-column align-items-left justify-content-left my-2 py-4">
+    {{#if succesMessage}}
+			<div class="alert alert-success" role="alert">
+  				{{message}}
+			</div>
+	{{/if}}
+
+    {{#if errorMessage}}
+			<div class="alert alert-danger" role="alert">
+  				{{message}}
+			</div>
+	{{/if}}
+</div>
+{{>footer}}

@@ -65,4 +65,26 @@ body {
 h4{
     color:#2b5b84;
     font-weight: bold;
+    margin-bottom: 40px;
+}
+.container-fluid div.d-flex{
+  background-color: #fff;
+  padding-left: 40px;
+  padding-right: 40px;
+  border: 1px solid #BEBEBE;
+  border-radius: 5px;
+  -webkit-box-shadow: 1px -1px 5px -1px rgba(0,0,0,0.75);
+  -moz-box-shadow: 1px -1px 5px -1px rgba(0,0,0,0.75);
+  box-shadow: 1px -1px 5px -1px rgba(0,0,0,0.75);
+  margin-top:20px;
+  margin: auto;
+  width:98%;
+  margin-top: 50px !important;
+}
+label{
+  color: #1E2831;
+  font-weight: bold;
+}
+.card{
+  border-radius: 10px;
 }
